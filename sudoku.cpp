@@ -1,4 +1,4 @@
-﻿// sudoku.cpp : 此檔案包含 'main' 函式。程式會於該處開始執行及結束執行。
+// sudoku.cpp : 此檔案包含 'main' 函式。程式會於該處開始執行及結束執行。
 //
 #define sq 9
 #include <iostream>
@@ -33,7 +33,7 @@ void possibility::CheckColumn(possibility k,int c,int arr[sq][sq]) {
     }
 }
 
-void CheckSquare(possibility k, int r, int c, int arr[sq][sq]) {
+void possibility::CheckSquare(possibility k, int r, int c, int arr[sq][sq]) {
     r /= 3;
     c /= 3;
     for (int i = r*3; i < 3; i++) {
@@ -48,7 +48,8 @@ void CheckSquare(possibility k, int r, int c, int arr[sq][sq]) {
 int main()
 {
     possibility s[9][9];
-    pair<int, int> MinPossi = { -1,-1 };
+    pair<int, int> MinLocate = { -1,-1 };
+    int MinPossi = 9;
     int sudoku[9][9];
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
@@ -58,10 +59,18 @@ int main()
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             if (sudoku[i][j] != 0) {
-                
+                s[i][j].CheckRow(s[i][j],i, sudoku);
+                s[i][j].CheckColumn(s[i][j], j, sudoku);
+                s[i][j].CheckSquare(s[i][j], i,j, sudoku);
+                if (s[i][j].amount <= MinPossi) {
+                    MinLocate.first = i;
+                    MinLocate.second = j;
+                }
             }
         }
     }
+
+
 
     
 
